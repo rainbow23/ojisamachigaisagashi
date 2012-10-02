@@ -1,0 +1,209 @@
+
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+    <head> 
+        <meta http-equiv="Content-type" content="text/html;charset=utf-8" /> 
+		<meta name="format" content="complete" />
+		        <style type="text/css">body,p,td,
+            div { font-family:Helvetica,Arial,sans-serif;line-height:1.4em;font-size:14px;color:#111; }
+            p { margin:0 0 1.7em 0; }
+            a { color:rgb(13,110,161);text-decoration:none;-webkit-transition:color .2s ease-in-out; }
+            a:hover { color:#3593d9; }
+            h1.doctitle { background:#eee;font-size:14px;font-weight:bold;color:#333;line-height:25px;margin:0;padding:0 10px;border-bottom:solid 1px #aaa; }
+            h1 { font-size:24px;color:#000;margin:12px 0 15px 0; }
+            h2 { font-size:20px;color:#111;width:auto;margin:15px 0 10px 2px; }
+            h2 em { line-height:1.6em;font-size:12px;color:#111;text-shadow:0 1px 0 #FFF;padding-left:10px; }
+            h3 { font-size:20px;color:#111; }
+            h4 { font-size:14px;color:#111;margin-bottom:1.3em; }
+            .footnote { font-size:.8em;vertical-align:super;color:rgb(13,110,161); }
+            #wrapper { background:#fff;position:fixed;top:0;left:0;right:0;bottom:0;-webkit-box-shadow:inset 0px 0px 4px #8F8D87; }
+            #contentdiv { position:fixed;top:27px;left:5px;right:5px;bottom:5px;background:transparent;color:#303030;overflow:auto;text-indent:0px;padding:10px; }
+            #contentdiv::-webkit-scrollbar { width:6px; }
+            #contentdiv::-webkit-scrollbar:horizontal { height:6px;display:none; }
+            #contentdiv::-webkit-scrollbar-track { background:transparent;-webkit-border-radius:0;right:10px; }
+            #contentdiv::-webkit-scrollbar-track:disabled { display:none; }
+            #contentdiv::-webkit-scrollbar-thumb { border-width:0;min-height:20px;background:#777;opacity:0.4;-webkit-border-radius:5px; }
+      </style> 
+
+	</head> 
+
+<body>  
+
+<div id="wrapper"><h1 class="doctitle">README for Unity support_ja.mdown.txt</h1><div id="contentdiv"><h1>AdLantis iOS SDK - README for Unity</h1>
+
+<h2>AdLantis SDK iOS サンプルアプリケーション利用方法:</h2>
+
+<p>（Unity 3.4 対応、Unity 3.3 以前のバージョンでは未対応）</p>
+
+<ul>
+<li><p>Unity で<code>「unity/adlantis_unity_sample」</code>プロジェクトを開く。</p>
+
+<ul>
+<li><p>このプロジェクトでPublisher ID を設定する。
+AdView クラス（AdView.cs スクリプト内）の Start() メソッドで、発行者 ID を以下のように設定してください。:</p>
+
+<pre><code>AdViewNative.SetPublisherId("MjExMA%3D%3D%0A");
+</code></pre>
+
+<p>(注：テスト用には AdView.cs の代わりに AdViewTest.cs も使用可能ですが、プロジェクトとしては AdView.cs ファイルが必要です。)</p></li>
+</ul></li>
+<li>iOS にプロジェクトをエクスポートする。
+<ul>
+<li>対象プラットフォームを Universal armv6+armv7 に設定する。</li>
+<li>SDK のバージョンを最新版の iOS に設定する。</li>
+<li>Unity 3.4はシミュレータに対応していません。Unity 3.3 でシミュレータにエクスポートした場合、ネイティブプラグインはサポートされません。</li>
+</ul></li>
+<li>Xcode でプロジェクトを開く。
+<ul>
+<li>Xcode 3.x では、対象を端末に設定する。</li>
+<li>Xcode 4.x では、スキームを Unity-iPhone 端末に設定する。（シミュレータに設定しないこと。）</li>
+</ul></li>
+<li><p>AdLantis ファイルをプロジェクトに追加する。</p>
+
+<ul>
+<li><p>フレームワークの追加:</p>
+
+<pre><code>MobileCoreServices.framework
+libz.dylib
+</code></pre></li>
+<li><p>adlantis ファイル（「adlantis_sdk」ディレクトリ）:</p>
+
+<pre><code>adlantis ヘッダーファイル
+adlantis ライブラリ
+asihttprequest
+jsonkit
+</code></pre></li>
+<li><p>「native<em>code」を追加する（「unity/plug</em>in」ディレクトリから）。</p>
+
+<pre><code>AdLantisSDKBinding.h
+AdLantisSDKBinding.mm
+AdLantisGeometryUtils.h
+AdLantisGeometryUtils.m
+</code></pre></li>
+<li><p>ソースを変更する。</p>
+
+<ul>
+<li><p>AppController.mm での変更
+AppController.mm ファイルでの変更は以下の通りです。</p>
+
+<ul>
+<li><p>ファイル内インポートセクションでの変更 at import section of the of file:</p>
+
+<pre><code>#import "AdlantisAdManager.h"
+#import "AdlantisView.h"
+#import "AdLantisSDKBinding.h"
+</code></pre></li>
+<li><p>OpenEAGL<em>UnityCallback 機能では、view 作成後に以下のようなコードを追加してください（[</em>window addSubview:view]; 行の後ろ)</p>
+
+<pre><code>//
+// AdLantis 追加開始
+//
+AdlantisView *adView = AdView_Init();
+[view addSubview:adView];
+_AdView_SetPosition(AdViewTop); // この機能は AdView_Set 呼出し後のみ有効です。
+//
+// AdLantis 追加終了
+//
+</code></pre></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>もしObjective-Cの例外で「cannot use '@try' with Objective-C exceptions disabled」というエラーメッセージが出た場合、「Enable Objective-C Exceptions」を「Yes」に設定するようにしてください。
+<img src="./images/enable_objective-c_exceptions.png" alt="Enable Objective-C Exceptions" title="Enable Objective-C Exceptions" /></p></li>
+<li>端末でアプリケーションを起動する。</li>
+</ul>
+
+<p><strong>注：Unity プロジェクトを変更する場合、必ず追加にして、既存のプロジェクトと置き換えないでください。</strong></p>
+
+<h2>AdLantis SDK サポートを iOS Unity 3.4 アプリケーションに追加する方法:</h2>
+
+<ul>
+<li><p>Unity でプロジェクトを開く。</p>
+
+<ul>
+<li>"title"シーンのオブジェクトをダブルクリックして開く。</li>
+<li><p>adView MonoBehavior クラスをプロジェクトに追加する。</p>
+
+<p><code>AdView.cs</code> スクリプトをシーンのオブジェクトの一つにドラッグしてください。シーンのメインカメラがよく使用されます。</p>
+
+<p><img src="./images/main_camera.png" alt="シーンのメインカメラがよく使用されます" title="シーンのメインカメラがよく使用されます" /></p>
+
+<p>スクリプトが加えられたことを確認するため、メインカメラのオブジェクトをクリックし、インスペクターパネルを調べてください。:</p>
+
+<p><img src="./images/main_camera_inspector.png" alt="メインカメラのインスペクターパネル" title="メインカメラのインスペクターパネル" /></p></li>
+<li>このプロジェクトで発行者 ID を設定する。
+AdView クラスの <code>Start()</code> メソッドで、発行者 ID を以下のように設定してください。:
+<code>AdViewNative.SetPublisherId("MjExMA%3D%3D%0A");</code>
+（注：テスト用には <code>AdView.cs</code> の代わりに <code>AdViewTest.cs</code> も使用可能ですが、プロジェクトとしては <code>AdView.cs</code> ファイルが必要です。）</li>
+<li><code>AdViewNative.cs</code> をプロジェクトに追加する。</li>
+</ul></li>
+<li>iOS にプロジェクトをエクスポートする。
+<ul>
+<li>対象プラットフォームを Universal armv6+armv7 に設定する。</li>
+<li>SDK のバージョンを最新版の iOS に設定する。</li>
+<li>Unity 3.4はシミュレータに対応していません。Unity 3.3 でシミュレータにエクスポートした場合、ネイティブプラグインはサポートされません。</li>
+</ul></li>
+<li>Xcode でプロジェクトを開く。
+<ul>
+<li>Xcode 3.x では、対象を端末に設定する。</li>
+<li>Xcode 4.x では、スキームを Unity-iPhone 端末に設定する。（シミュレータに設定しないこと。）</li>
+</ul></li>
+<li><p>AdLantis ファイルをプロジェクトに追加する。</p>
+
+<ul>
+<li><p>フレームワークの追加:</p>
+
+<pre><code>MobileCoreServices.framework
+libz.dylib
+CoreGraphics.framework (included by Unity 3.4)
+</code></pre></li>
+<li><p>adlantis ファイル（「adlantis_sdk」ディレクトリ）:</p>
+
+<pre><code>adlantis header files
+adlantis library
+asihttprequest
+jsonkit
+</code></pre></li>
+<li><p><code>「native_code」</code>を追加する（「unity/plug_in」ディレクトリから）。</p>
+
+<pre><code>AdLantisSDKBinding.h
+AdLantisSDKBinding.mm
+AdLantisGeometryUtils.h
+AdLantisGeometryUtils.m
+</code></pre></li>
+<li><p>ソースを変更する。</p>
+
+<ul>
+<li><p>AppController.mm での変更
+AppController.mm ファイルでの変更は以下の通りです。</p>
+
+<ul>
+<li><p>ファイル内インポートセクションでの変更:</p>
+
+<pre><code>#import "AdlantisAdManager.h"
+#import "AdlantisView.h"
+#import "AdLantisSDKBinding.h"
+</code></pre></li>
+<li><p><code>OpenEAGL_UnityCallback</code> 機能では、view 作成後に以下のようなコードを追加してください（<code>[_window addSubview:view];</code> 行の後ろ）。</p>
+
+<pre><code>//
+// AdLantis 追加開始
+//
+AdlantisView *adView = AdView_Init();
+[view addSubview:adView];
+_AdView_SetPosition(AdViewTop); // この機能は AdView_Set 呼出し後のみ有効です。
+//
+// AdLantis 追加終了
+//
+</code></pre></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>もしObjective-Cの例外で「cannot use '@try' with Objective-C exceptions disabled」というエラーメッセージが出た場合、「Enable Objective-C Exceptions」を「Yes」に設定するようにしてください。
+<img src="./images/enable_objective-c_exceptions.png" alt="Enable Objective-C Exceptions" title="Enable Objective-C Exceptions" /></p></li>
+<li>端末でアプリケーションを起動する。</li>
+</ul>
+
+<p><strong>注：Unity プロジェクトを変更する場合、変更は必ず追加にして、既存のプロジェクトと置き換えないでください。</strong></p>
+</div> </div></body></html>

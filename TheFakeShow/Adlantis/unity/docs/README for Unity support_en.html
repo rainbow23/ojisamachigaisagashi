@@ -1,0 +1,211 @@
+
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+    <head> 
+        <meta http-equiv="Content-type" content="text/html;charset=utf-8" /> 
+		<meta name="format" content="complete" />
+		        <style type="text/css">body,p,td,
+            div { font-family:Helvetica,Arial,sans-serif;line-height:1.4em;font-size:14px;color:#111; }
+            p { margin:0 0 1.7em 0; }
+            a { color:rgb(13,110,161);text-decoration:none;-webkit-transition:color .2s ease-in-out; }
+            a:hover { color:#3593d9; }
+            h1.doctitle { background:#eee;font-size:14px;font-weight:bold;color:#333;line-height:25px;margin:0;padding:0 10px;border-bottom:solid 1px #aaa; }
+            h1 { font-size:24px;color:#000;margin:12px 0 15px 0; }
+            h2 { font-size:20px;color:#111;width:auto;margin:15px 0 10px 2px; }
+            h2 em { line-height:1.6em;font-size:12px;color:#111;text-shadow:0 1px 0 #FFF;padding-left:10px; }
+            h3 { font-size:20px;color:#111; }
+            h4 { font-size:14px;color:#111;margin-bottom:1.3em; }
+            .footnote { font-size:.8em;vertical-align:super;color:rgb(13,110,161); }
+            #wrapper { background:#fff;position:fixed;top:0;left:0;right:0;bottom:0;-webkit-box-shadow:inset 0px 0px 4px #8F8D87; }
+            #contentdiv { position:fixed;top:27px;left:5px;right:5px;bottom:5px;background:transparent;color:#303030;overflow:auto;text-indent:0px;padding:10px; }
+            #contentdiv::-webkit-scrollbar { width:6px; }
+            #contentdiv::-webkit-scrollbar:horizontal { height:6px;display:none; }
+            #contentdiv::-webkit-scrollbar-track { background:transparent;-webkit-border-radius:0;right:10px; }
+            #contentdiv::-webkit-scrollbar-track:disabled { display:none; }
+            #contentdiv::-webkit-scrollbar-thumb { border-width:0;min-height:20px;background:#777;opacity:0.4;-webkit-border-radius:5px; }
+      </style> 
+
+	</head> 
+
+<body>  
+
+<div id="wrapper"><h1 class="doctitle">README for Unity support_en.mdown.txt</h1><div id="contentdiv"><h1>AdLantis iOS SDK - README for Unity</h1>
+
+<p>README for Unity support.</p>
+
+<h2>How to use the AdLantis SDK iOS sample project </h2>
+
+<p>Note: These instructions are for Unity 3.4 and later, Unity 3.3 and earlier are not supported.</p>
+
+<ul>
+<li><p>Open project <code>unity/adlantis_unity_sample</code> in Unity</p>
+
+<ul>
+<li><p>set publisher ID in this project
+in the <code>Start()</code> method of the AdView class (in the <code>AdView.cs</code> script), set your publisher Id as follows:</p>
+
+<pre><code>AdViewNative.SetPublisherId("MjExMA%3D%3D%0A");
+</code></pre>
+
+<p>(Note: For testing, the <code>AdViewTest.cs</code> can be used instead of <code>AdView.cs</code>. The <code>AdView.cs</code> file will still be needed for the project however.)</p></li>
+</ul></li>
+<li>Export project to iOS
+<ul>
+<li>target platform should be set to Universal armv6+armv7</li>
+<li>set SDK version to iOS latest</li>
+<li>with Unity 3.4, simulator is not supported.</li>
+</ul></li>
+<li>Open project in Xcode
+<ul>
+<li>On Xcode 3.x set target to device.</li>
+<li>On Xcode 4.x set scheme to Unity-iPhone device (not simulator).</li>
+</ul></li>
+<li><p>Add AdLantis files to project</p>
+
+<ul>
+<li><p>framework additions:</p>
+
+<pre><code>MobileCoreServices.framework
+libz.dylib
+</code></pre></li>
+<li><p>adlantis files (the <code>adlantis_sdk</code> directory):</p>
+
+<pre><code>adlantis header files
+adlantis library
+asihttprequest
+jsonkit
+</code></pre></li>
+<li><p>add <code>native_code</code> (from "unity/plug_in" directory)</p>
+
+<pre><code>AdLantisSDKBinding.h
+AdLantisSDKBinding.mm
+AdLantisGeometryUtils.h
+AdLantisGeometryUtils.m
+</code></pre></li>
+<li><p>make source changes</p>
+
+<ul>
+<li><p>in AppController.mm
+in the file AppController.mm </p>
+
+<ul>
+<li><p>in import section of the of file:</p>
+
+<pre><code>#import "AdlantisAdManager.h"
+#import "AdlantisView.h"
+#import "AdLantisSDKBinding.h"
+</code></pre></li>
+<li><p>in the function <code>OpenEAGL_UnityCallback</code> need to add code like the following after the view has been created (after the line with <code>[_window addSubview:view];</code> )</p>
+
+<pre><code>//
+// AdLantis additions begin
+//
+AdlantisView *adView = AdView_Init();
+[view addSubview:adView];
+_AdView_SetPosition(AdViewTop); // This function only works after AdView_Set is called
+//
+// AdLantis additions end
+//
+</code></pre></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>If you see an error concerning Objective-C exceptions "cannot use '@try' with Objective-C exceptions disabled", make sure to set "Enable Objective-C Exceptions" to "Yes"
+<img src="./images/enable_objective-c_exceptions.png" alt="Enable Objective-C Exceptions" title="Enable Objective-C Exceptions" /></p></li>
+<li>Run application on device</li>
+</ul>
+
+<p><strong>Note: If making any changes to the Unity project, be sure to append, not replace existing project.</strong></p>
+
+<h2>How to add AdLantis SDK support to an iOS Unity 3.4 application:</h2>
+
+<ul>
+<li><p>Open project in Unity</p>
+
+<ul>
+<li>double click on the "title" scene object to open it</li>
+<li><p>add adView MonoBehavior class to project</p>
+
+<p>drag the <code>AdView.cs</code> script to one of objects in the scene hierarchy. The main camera of the scene is often used.</p>
+
+<p><img src="./images/main_camera.png" alt="attach script to main camera" title="attach script to main camera" /></p>
+
+<p>To confirm that the script is attached, click on the main camera object and examine the inspector panel:</p>
+
+<p><img src="./images/main_camera_inspector.png" alt="main camera inspector panel" title="main camera inspector panel" /></p></li>
+<li>set publisher ID in this project
+in the <code>Start()</code> method of the AdView class, set your publisher ID as follows:
+<code>AdViewNative.SetPublisherId("MjExMA%3D%3D%0A");</code>
+(Note: For testing, the <code>AdViewTest.cs</code> can be used instead of <code>AdView.cs</code>. The <code>AdView.cs</code> file will still be needed for the project however.)</li>
+<li>include <code>AdViewNative.cs</code> in the project</li>
+</ul></li>
+<li>Export project to iOS
+<ul>
+<li>target platform should be set to Universal armv6+armv7</li>
+<li>set SDK version to iOS latest</li>
+<li>with Unity 3.4, simulator is not supported.</li>
+</ul></li>
+<li>Open project in Xcode
+<ul>
+<li>On Xcode 3.x set target to device.</li>
+<li>On Xcode 4.x set scheme to Unity-iPhone device (not simulator).</li>
+</ul></li>
+<li><p>Add AdLantis files to project</p>
+
+<ul>
+<li><p>framework additions:</p>
+
+<pre><code>MobileCoreServices.framework
+libz.dylib
+CoreGraphics.framework (included by Unity 3.4)
+</code></pre></li>
+<li><p>adlantis files (the "adlantis_sdk" directory):</p>
+
+<pre><code>adlantis header files
+adlantis library
+asihttprequest
+jsonkit
+</code></pre></li>
+<li><p>add "native_code" (from <code>unity/plug_in</code> directory)</p>
+
+<pre><code>AdLantisSDKBinding.h
+AdLantisSDKBinding.mm
+AdLantisGeometryUtils.h
+AdLantisGeometryUtils.m
+</code></pre></li>
+<li><p>make source changes</p>
+
+<ul>
+<li><p>in AppController.mm
+in the file AppController.mm </p>
+
+<ul>
+<li><p>at import section of the of file:</p>
+
+<pre><code>#import "AdlantisAdManager.h"
+#import "AdlantisView.h"
+#import "AdLantisSDKBinding.h"
+</code></pre></li>
+<li><p>in the function <code>OpenEAGL_UnityCallback</code> need to add code like the following after the view has been created (after the line with <code>[_window addSubview:view];</code> )</p>
+
+<pre><code>//
+// AdLantis additions begin
+//
+AdlantisView *adView = AdView_Init();
+[view addSubview:adView];
+_AdView_SetPosition(AdViewTop); // This function only works after AdView_Set is called
+//
+// AdLantis additions end
+//
+</code></pre></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p>If you see an error concerning Objective-C exceptions "cannot use '@try' with Objective-C exceptions disabled", make sure to set "Enable Objective-C Exceptions" to "Yes"
+<img src="./images/enable_objective-c_exceptions.png" alt="Enable Objective-C Exceptions" title="Enable Objective-C Exceptions" /></p></li>
+<li>Run application on device</li>
+</ul>
+
+<p><strong>Note: If making any changes to the Unity project, be sure to append, not replace existing project.</strong></p>
+</div> </div></body></html>

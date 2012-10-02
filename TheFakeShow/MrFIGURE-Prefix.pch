@@ -1,0 +1,22 @@
+//
+// Prefix header for all source files of the 'TheFakeShow' target in the 'TheFakeShow' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iPhone SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+#endif
+
+
+//ゲームデバッグ(正解エリアの描画
+//#define DEBUG_GAME_DRAW_FRAME
+
+//Landscape時の広告バナーサイズ
+#define ADVIEW_BANNER_SIZE_WIDTH  480
+#define ADVIEW_BANNER_SIZE_HEIGHT 32

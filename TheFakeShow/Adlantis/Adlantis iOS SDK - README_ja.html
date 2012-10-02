@@ -1,0 +1,239 @@
+
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+    <head> 
+        <meta http-equiv="Content-type" content="text/html;charset=utf-8" /> 
+		<meta name="format" content="complete" />
+		        <style type="text/css">body,p,td,
+            div { font-family:Helvetica,Arial,sans-serif;line-height:1.4em;font-size:14px;color:#111; }
+            p { margin:0 0 1.7em 0; }
+            a { color:rgb(13,110,161);text-decoration:none;-webkit-transition:color .2s ease-in-out; }
+            a:hover { color:#3593d9; }
+            h1.doctitle { background:#eee;font-size:14px;font-weight:bold;color:#333;line-height:25px;margin:0;padding:0 10px;border-bottom:solid 1px #aaa; }
+            h1 { font-size:24px;color:#000;margin:12px 0 15px 0; }
+            h2 { font-size:20px;color:#111;width:auto;margin:15px 0 10px 2px; }
+            h2 em { line-height:1.6em;font-size:12px;color:#111;text-shadow:0 1px 0 #FFF;padding-left:10px; }
+            h3 { font-size:20px;color:#111; }
+            h4 { font-size:14px;color:#111;margin-bottom:1.3em; }
+            .footnote { font-size:.8em;vertical-align:super;color:rgb(13,110,161); }
+            #wrapper { background:#fff;position:fixed;top:0;left:0;right:0;bottom:0;-webkit-box-shadow:inset 0px 0px 4px #8F8D87; }
+            #contentdiv { position:fixed;top:27px;left:5px;right:5px;bottom:5px;background:transparent;color:#303030;overflow:auto;text-indent:0px;padding:10px; }
+            #contentdiv::-webkit-scrollbar { width:6px; }
+            #contentdiv::-webkit-scrollbar:horizontal { height:6px;display:none; }
+            #contentdiv::-webkit-scrollbar-track { background:transparent;-webkit-border-radius:0;right:10px; }
+            #contentdiv::-webkit-scrollbar-track:disabled { display:none; }
+            #contentdiv::-webkit-scrollbar-thumb { border-width:0;min-height:20px;background:#777;opacity:0.4;-webkit-border-radius:5px; }
+      </style> 
+
+	</head> 
+
+<body>  
+
+<div id="wrapper"><h1 class="doctitle">Adlantis iOS SDK - README_ja.mdown.txt</h1><div id="contentdiv"><h1>AdLantis iOS SDK - Readme</h1>
+
+<p>version 1.3.3 / 2011-10-18</p>
+
+<p>AdLantis iOS SDK を使用することで、 iPhone や iPod touch 用に開発されたアプリケーション内に AdLantis の広告を表示することができます。</p>
+
+<p>また、 AdLantis Ad+Network for Smartphone に出稿した広告の効果を測定するため、本 SDK を通じて AdLantis へ成果ビーコンの送出を行うことができます。</p>
+
+<h2>対象 SDK バージョン</h2>
+
+<p>本ドキュメントは AdLantis iOS SDK 1.3.3 を対象としています。</p>
+
+<h2>前回リリース (1.3.1) からの変更点</h2>
+
+<ul>
+<li>ランドスケープモード (デバイスを横方向に持った状態) においてより多くの広告が表示されるよう、通信の仕様を変更しました。</li>
+<li>開発の際に Xcode のプロジェクトに含めるべきファイルを "adlantis_sdk" ディレクトリにまとめました。このディレクトリをプロジェクトにドラッグするだけで済みます。</li>
+<li>Unity 3.4 を用いたアプリケーションに対応しました。詳細は "unity" ディレクトリを確認してください。</li>
+<li>ASIHttpRequest のバージョンを 1.8.1 に更新しました。</li>
+<li>.lproj ディレクトリを従来の表記 ("English.lproj", "Japanese.lproj") から新しい表記 ("en.lproj", "ja.lproj") に変更しました。</li>
+</ul>
+
+<h2>配布パッケージの内容物</h2>
+
+<p>配布パッケージ (<code>libadlantis_ios_sdk-1.3.3.zip</code>) には次のファイルが含まれています。</p>
+
+<ul>
+<li><p><code>adlantis_sample/</code></p>
+
+<p>AdLantis iOS SDK の組み込み方法のデモプロジェクトです。サンプルコードの動かし方は後述しています。</p></li>
+<li><p><code>adlantis_sdk/</code></p>
+
+<p>AdLantis iOS SDK をアプリケーションに組み込むために必要な、以下のファイルが入っています。Xcode プロジェクトに本ディレクトリごとドラッグしてください。</p>
+
+<ul>
+<li><p><code>AdlantisAd.h</code>, <code>AdlantisAdManager.h</code>, <code>AdlantisView.h</code></p>
+
+<p>SDK を使用するためのヘッダファイルです。プロジェクト内でインクルードしてください。</p></li>
+<li><p><code>JSONKit/</code>, <code>asihttprequest/</code></p>
+
+<p>AdLantis iOS SDK を動作させるために必要なライブラリです。</p></li>
+<li><p><code>libadlantis_ios_sdk.a</code></p>
+
+<p>AdLantis iOS SDK 本体です。(スタティックライブラリ)</p></li>
+<li><p><code>*.lproj</code></p>
+
+<p>AdLantis iOS SDK が表示する各種メッセージのローカライズ可能なリソースです。</p></li>
+</ul></li>
+</ul>
+
+<h2>サンプルコードの動かし方</h2>
+
+<p><code>adlantis_sample</code> ディレクトリ内のサンプルプロジェクトの動かし方です。</p>
+
+<p><a href="http://sp.www.adlantis.jp/">AdLantis for Smartphone の管理画面</a> より広告枠を作成し、アプリケーション専用広告枠の広告コードを取得してください。広告枠コードは下記のようなスニペットです。</p>
+
+<pre><code>    AdlantisAdManager.sharedManager.publisherID = @"MTk1MQ%3D%3D%0A";
+</code></pre>
+
+<p>広告コードは、プロジェクト内の<code>RootViewController.m</code>に記述してください。</p>
+
+<p>コンパイルして広告の表示を確認することができます。</p>
+
+<h4>注意</h4>
+
+<ul>
+<li><p>管理画面で広告枠を作成後、実際に広告が配信されるようになるまで最大で 1 時間ほどかかることがあります。</p></li>
+<li><p>広告枠作成直後、また配信できる広告キャンペーンが一時的にない場合などは広告が配信されないことがあります。その場合、広告枠は表示されません。しばらく時間をおいてから再度テストを行ってください。</p></li>
+</ul>
+
+<h2>アプリケーション識別子について</h2>
+
+<p>広告枠やコンバージョンタグを作成する際、アプリケーションの識別子を AdLantis の管理画面に入力していただくことがあります。通常、 <code>jp.adlantis.shaojump</code> のように、ドメインを逆から読んだようなフォーマットになっています。</p>
+
+<p>アプリケーション識別子は、アプリケーションのプロジェクトを Xcode で開き、 Info.plist の "Bundle Identifier" 項目から確認することができます。</p>
+
+<h2>SDKのプロジェクトへの配置</h2>
+
+<p>AdLantis iOS SDK をプロジェクトで使用できるようにするためには、以下の手順に沿ってファイルの配置を行う必要があります。</p>
+
+<p>(SDKを広告の配信に用いる場合、およびコンバージョンの追跡に用いる場合のどちらでも必要です)</p>
+
+<ol>
+<li><p>AdLantis iOS SDK をダウンロードし、適当な場所に展開します。</p></li>
+<li><p>アーカイブ内の <code>adlantis_sdk</code> ディレクトリをプロジェクトディレクトリに追加してください。</p></li>
+<li><p>Xcode でプロジェクトを開き、Apple iOS SDK 同梱の以下のフレームワークを Xcode のプロジェクトに追加してください。</p>
+
+<ul>
+<li><code>MobileCoreService.framework</code></li>
+<li><code>CFNetwork.framework</code></li>
+<li><code>SystemConfiguration.framework</code></li>
+<li><code>libz.dylib</code></li>
+</ul></li>
+<li><p>スタティックライブラリのクラスをロードするため、Xcode プロジェクトの [情報] → [他のリンカフラグ] に <code>-ObjC</code> を追加します。</p></li>
+</ol>
+
+<h2>ビューへの広告枠の組み込み方法</h2>
+
+<p>まず管理画面から取得した広告枠コードを、 <code>AdlantisView</code> クラスを初期化する前に実行されるブロックに配置してください。</p>
+
+<p>AdLantisViewクラスを使用した組み込みはプログラム中でインスタンスを作成するか、Interface Builderで追加する形になります。</p>
+
+<p>AdLantisViewクラスで描写されるビューは、UIViewの画面下部若しくは画面上部に配置して使用されることを前提に設計されており、サイズは下記のものを想定しています。</p>
+
+<p>（クリエイティブのサイズもこちらに合ったものが配信されます）</p>
+
+<ul>
+<li>縦方向画面（ポートレイトモード） : 320 × 50</li>
+<li>横方向画面（ランドスケープモード） : 480 × 32</li>
+</ul>
+
+<p>画面方向が変化した時に画面モードに合ったサイズに変更する処理はアプリケーションの中で実装する必要があります。</p>
+
+<p>その他、詳細な組み込み方法およびクラスリファレンスは <a href="http://tn.adlantis.jp/iPhoneAppOwner/adlantis-iphone-sdk">AdLantis TechNote</a> をご覧ください。</p>
+
+<h2>コンバージョンの追跡</h2>
+
+<p>AdLantisで広告を配信する際に、管理画面よりコンバージョンタグを生成してアプリケーションに組み込むことにより、広告をクリックしたユーザーが当該アプリケーションの（購入や）起動を行ったかを追跡することが可能です。</p>
+
+<ul>
+<li><p>コンバージョンの追跡の場合も [SDKのプロジェクトへの配置] の手順はすべて実行してください。</p></li>
+<li><p>管理画面からコンバージョンタグを作成し、追跡したいキャンペーンを登録してください。</p></li>
+<li><p>コンバージョンコードの表示からコンバージョンコードを確認し、アプリケーション中の成果地点としたい場所でコールしてください。(初回起動時、In-App Purchase完了時など)</p></li>
+</ul>
+
+<p>コードは次のようなフォーマットで提供されます。</p>
+
+<pre><code>/* AdLantis ConversionTracker: [hogeApp] */
+[[AdlantisAdManager sharedManager] sendConversionTag:@"MTk%3D%0A"];
+</code></pre>
+
+<p>また、コンバージョンコードが処理中に正しく呼ばれているかを確認するために、コンバージョンテストの機能を提供しています。</p>
+
+<ul>
+<li>管理画面のコンバージョンコードの詳細から、[コンバージョンテスト] を選択し、コンバージョンテスト用のコードを取得しはりつけます。</li>
+<li>コンバージョンテストのコード表示画面の下部には、最後にコンバージョンリクエストのあった時刻が表示されています。</li>
+<li>アプリケーションにコンバージョンテストコードを組み込み、最後にコンバージョンリクエストのあった時刻と照らしあわせながらデバッグを行ってください。</li>
+</ul>
+
+<h2>更新履歴</h2>
+
+<h4>1.3.3 (2011/10/18)</h4>
+
+<ul>
+<li>ランドスケープモード (デバイスを横方向に持った状態) においてより多くの広告が表示されるよう、通信の仕様を変更しました。</li>
+<li>開発の際に Xcode のプロジェクトに含めるべきファイルを "adlantis_sdk" ディレクトリにまとめました。このディレクトリをプロジェクトにドラッグするだけで済みます。</li>
+<li>Unity 3.4 を用いたアプリケーションに対応しました。詳細は "unity" ディレクトリを確認してください。</li>
+<li>ASIHttpRequest のバージョンを 1.8.1 に更新しました。</li>
+<li>.lproj ディレクトリを従来の表記 ("English.lproj", "Japanese.lproj") から新しい表記 ("en.lproj", "ja.lproj") に変更しました。</li>
+</ul>
+
+<h4>1.3.1 (2011/07/25)</h4>
+
+<ul>
+<li>AdlantisAdManger がメモリリークを引き起こすことがあったバグを修正しました</li>
+</ul>
+
+<h4>1.3.0 (2011/04/14)</h4>
+
+<ul>
+<li>iPhone 4 や iPod touch (4th Generation) など、高解像度ディスプレイをサポートするデバイスに対して高解像度のバナーが表示されるようになりました。 (配信される広告が高解像度バナーを持っている場合に限ります)</li>
+<li>ライブラリ名が <code>libadlantis_iphone_sdk</code> から <code>libadlantis_ios_sdk</code> に変更されました</li>
+<li>本バージョンから、Xcodeのプロジェクト設定にて <code>-ObjC</code> をその他のリンカフラグに指定する必要があります。<code>-all_load</code> や <code>-force_load</code> を指定する必要はなくなりました</li>
+<li><code>libYAJLIOS</code> に代わり、 <code>JSONKit</code> をプロジェクトに組み込む必要があります。 JSONKit は本配布パッケージに同梱してあります</li>
+<li><code>ASIHTTPRequest</code> のバージョンを 1.8 にアップデートしました</li>
+<li>広告が提供されていない時に広告枠の描画がされないよう、<code>AdlantisView</code> は hidden と alpha のプロパティを操作しなくなりました</li>
+<li><code>initWithFrame</code> メソッドを用いて広告の描画が正しく行われないバグを修正しました</li>
+</ul>
+
+<h4>1.2.1 (2010/11/09)</h4>
+
+<p>小規模な修正。このバージョンでは iOS 3.1.3 から 4.2 をサポートします。 (iOS 2.xはサポートしません) </p>
+
+<ul>
+<li>新しい広告サイズ (320x50, 480x32) に対応しました</li>
+<li>プレビューモードで用いるアイコンをRetina Displayに対応しました</li>
+<li>ASIHTTPRequestライブラリが更新されました</li>
+<li>libYAJLiPhoneライブラリはlibYAJLIOSに名前が変更され、更新されました</li>
+<li>MobileCoreServices.frameworkが必要になります。ビルドの際に MobileCoreServices.frameworkをリンクしてください。</li>
+</ul>
+
+<h4>1.2 (2010/04/28)</h4>
+
+<ul>
+<li>成果追跡機能を追加 </li>
+</ul>
+
+<h4>1.1  (2010/02/17)</h4>
+
+<ul>
+<li>プレビュー機能を追加</li>
+</ul>
+
+<h4>1.0.1 (2009/12/22)</h4>
+
+<p>小規模なバグフィックス</p>
+
+<ul>
+<li>特定の条件においてインプレッションが正常に報告されない問題を修正 </li>
+</ul>
+
+<h4>1.0 (2009/12/14)</h4>
+
+<ul>
+<li>初期リリース </li>
+</ul>
+</div> </div></body></html>
