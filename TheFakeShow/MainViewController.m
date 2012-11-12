@@ -141,6 +141,8 @@
             self.imgButtonFacebook.alpha    = 0.0f;
             self.buttonFacebook.alpha       = 0.0f;
 
+            self.weblinkButton.alpha        = 1.0f;
+
             break;
         }
 
@@ -172,6 +174,8 @@
 
             self.imgButtonFacebook.alpha    = 0.0f;
             self.buttonFacebook.alpha       = 0.0f;
+
+            self.weblinkButton.alpha        = 0.0f;
 
             break;
         }
@@ -205,6 +209,8 @@
             self.imgButtonFacebook.alpha    = 0.0f;
             self.buttonFacebook.alpha       = 0.0f;
 
+            self.weblinkButton.alpha        = 0.0f;
+
             break;
         }
 
@@ -236,6 +242,8 @@
 
             self.imgButtonFacebook.alpha    = 0.0f;
             self.buttonFacebook.alpha       = 0.0f;
+
+            self.weblinkButton.alpha        = 0.0f;
 
             break;
         }
@@ -596,6 +604,8 @@
         [audioGame stop];
     }
     [audioGame release], audioGame = nil;
+    ////////////////////////////////////////////////////////////////////////////
+    self.weblinkButton = nil;
 
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -643,7 +653,8 @@
     }
     [audioGame release], audioGame = nil;
 
-
+    ////////////////////////////////////////////////////////////////////////////
+    [_weblinkButton release];
     [super dealloc];
 }
 
@@ -898,6 +909,12 @@
     [self soundPlay:@"tap" type:@"mp3" volume:1.0f];
 
     [self showGameStage:NO];
+}
+
+
+- (IBAction)weblink
+{
+    NSLog(@"%s", __func__);
 }
 
 

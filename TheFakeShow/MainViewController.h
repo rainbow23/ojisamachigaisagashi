@@ -80,4 +80,7 @@ typedef enum {
 //ステージクリア ゲームオーバー時の操作
 - (IBAction) showStage:(id)sender;
 
+- (IBAction)weblink;
+@property (retain, nonatomic) IBOutlet UIButton *weblinkButton;
+
 @end
